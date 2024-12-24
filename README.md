@@ -1,10 +1,12 @@
 # PowerDNS Installation on Ubuntu 22.04 LTS
 This guide will walk you through the process of installing PowerDNS and configuring it with the MySQL backend on Ubuntu 22.04 LTS. It includes steps for setting up the MariaDB database, configuring PowerDNS, installing necessary dependencies, and setting up the PowerDNS Admin web interface.
 
-### Update Server
-```sudo apt update && sudo apt upgrade -y```
+## Install Update and Upgrade Server
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-## 1. Install and Configure MariaDB
+## Install and Configure MariaDB
 First, we need to install and configure the MariaDB database, which will serve as the backend for PowerDNS.
 
 ```bash
@@ -142,17 +144,31 @@ exit
 ```
 
 
-## 2. Disable systemd-resolved (if required)
+## Disable systemd-resolved (if required)
 You may need to disable systemd-resolved to avoid conflicts with DNS resolution:
 
-
-
+```bash
 sudo systemctl stop systemd-resolved.service
 sudo systemctl disable systemd-resolved.service
-sudo vim /etc/resolv.conf
-Ensure that resolv.conf points to the correct DNS server, if necessary.
+```
 
-3. Add PowerDNS Repository
+## Ensure that resolv.conf points to the correct DNS server, if necessary.
+```bash
+sudo vim /etc/resolv.conf
+```
+Comment Out the nameservers
+```
+#nameserver 127.0.0.53
+#options edns0 trust-ad
+#search some domain
+```
+Replace it with
+```
+nameserver 8.8.8.8
+nameserver 1.1.1.1
+```
+
+## Add PowerDNS Repository
 Add the PowerDNS APT repository to your system:
 
 
