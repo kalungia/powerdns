@@ -235,6 +235,39 @@ Backup the default named.conf and pdns.conf file that is under "/etc/powerdns":
 mv named.conf named.conf.bak
 mv pdns.conf pdns.conf.bak
 ```
+Add the Following in pdns.conf
+```bash
+allow-axfr-ips=192.168.30.3, 192.168.30.4, 192.168.40.3,192.168.40.4 #slave server ip
+also-notify=192.168.30.3,192.168.30.4,192.168.40.3,192.168.40.4 #slave server ip
+api=yes
+
+api-key=86b0054c-43f3-4e8e-8bfb-719ffb05d6c8 #You can generate one from https://codepen.io/corenominal/pen/rxOmMJ
+daemon=yes
+
+default-soa-content=master.@ hostmaster.@ 0 1800 3600 604800 5400
+
+
+disable-axfr=no
+guardian=yes
+include-dir=/etc/powerdns/pdns.d
+launch=
+local-address=0.0.0.0
+local-port=53
+log-dns-details=on
+log-dns-queries=yes
+log-timestamp=yes
+loglevel=4
+master=yes
+security-poll-suffix=
+setgid=pdns
+setuid=pdns
+slave=no
+version-string=powerdns
+webserver=yes
+webserver-address= #ip address of the webserver
+webserver-allow-from=::/0, 0.0.0.0/0
+webserver-port=8081
+```
 
 
 6. Set Up PowerDNS Admin Interface (Optional)
