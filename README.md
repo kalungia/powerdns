@@ -224,13 +224,19 @@ gmysql-dnssec=yes
 # gmysql-socket=
 ```
 
+Restart pdns.service and check it's status for any errors:
+```bash
 sudo systemctl restart pdns.service
 sudo systemctl status pdns.service
-You can also check for any configuration issues with the following command:
+```
+Backup the default named.conf and pdns.conf file that is under "/etc/powerdns":
+``cd /etc/powerdns/``
+```bash
+mv named.conf named.conf.bak
+mv pdns.conf pdns.conf.bak
+```
 
 
-
-pdns_server --config-dir=/etc/powerdns/ --check-config
 6. Set Up PowerDNS Admin Interface (Optional)
 If you want to manage PowerDNS via a web interface, you need to install PowerDNS Admin.
 
