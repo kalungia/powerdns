@@ -197,36 +197,32 @@ sudo apt-get install pdns-server pdns-backend-mysql -y
 sudo apt install net-tools
 ```
 
-Add the repository URL inside the file and then install the repository keyring
+## Configure PowerDNS to Use MySQL Backend
+### To configure PowerDNS to use the MySQL backend, make sure you modify the PowerDNS configuration files.
+
+Backup the default bind.conf file that is under "/etc/powerdns/pds.d":
+``cd /etc/powerdns/pds.d``
 ```bash
-sudo install -d /etc/apt/keyrings
-curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/auth-49-pub.asc
-sudo apt-get update
+mv bind.conf bind.conf.bak
 ```
-Install PowerDNS server and MySQL backend:
-
-
-
-sudo apt install pdns-server pdns-backend-mysql -y
-4. Check PowerDNS Installation
-Check the status of the PowerDNS service:
-
-
-
-sudo systemctl status pdns.service
-5. Configure PowerDNS to Use MySQL Backend
-To configure PowerDNS to use the MySQL backend, make sure you modify the PowerDNS configuration files.
-
-Move the default bind.conf file:
-
-
-mv bind.conf bind.conf.original
-Edit the pdns.local.gmysql.conf configuration file:
-
-
+Create pdns.local.gmysql.conf
+```bash
 sudo vim pdns.local.gmysql.conf
-Make necessary adjustments in the configuration and then restart PowerDNS:
-
+```
+Add the following:
+```bash
+# MySQL Configuration
+# Launch gmysql backend
+launch+=gmysql
+# gmysql parameters
+gmysql-host=localhost
+gmysql-port=3306
+gmysql-dbname=powerdns
+gmysql-user=powerdns
+gmysql-password=userpassword
+gmysql-dnssec=yes
+# gmysql-socket=
+```
 
 sudo systemctl restart pdns.service
 sudo systemctl status pdns.service
