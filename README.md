@@ -192,13 +192,17 @@ sudo apt-get update &&
 sudo apt-get install pdns-server pdns-backend-mysql -y
 ```
 
-Add the repository URL inside the file and then install the repository keyring:
+## Install Net Tools
+```bash
+sudo apt install net-tools
+```
 
-
-
+Add the repository URL inside the file and then install the repository keyring
+```bash
 sudo install -d /etc/apt/keyrings
 curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/auth-49-pub.asc
 sudo apt-get update
+```
 Install PowerDNS server and MySQL backend:
 
 
