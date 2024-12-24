@@ -143,7 +143,6 @@ Exit From MySQL
 exit
 ```
 
-
 ## Disable systemd-resolved (if required)
 You may need to disable systemd-resolved to avoid conflicts with DNS resolution:
 
@@ -167,13 +166,32 @@ Replace it with
 nameserver 8.8.8.8
 nameserver 1.1.1.1
 ```
+Update Server after changing nameservers
+```bash
+sudo apt update
+```
 
 ## Add PowerDNS Repository
-Add the PowerDNS APT repository to your system:
+### Add the PowerDNS APT repository to your system:
 
+Create the file '/etc/apt/sources.list.d/pdns.list' with this content:
+```bash
+deb [signed-by=/etc/apt/keyrings/auth-49-pub.asc] http://repo.powerdns.com/ubuntu jammy-auth-49 main
+```
+Put this in '/etc/apt/preferences.d/auth-49':
+```bash
+Package: auth*
+Pin: origin repo.powerdns.com
+Pin-Priority: 600
+```
+and execute the following commands:
 
+```bash
+sudo install -d /etc/apt/keyrings; curl https://repo.powerdns.com/FD380FBB-pub.asc | sudo tee /etc/apt/keyrings/auth-49-pub.asc &&
+sudo apt-get update &&
+sudo apt-get install pdns-server pdns-backend-mysql -y
+```
 
-sudo vim /etc/apt/sources.list.d/pdns.list
 Add the repository URL inside the file and then install the repository keyring:
 
 
